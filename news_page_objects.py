@@ -10,6 +10,7 @@ class HomePage:
         self._config = config()['news_sites'][news_site_uid]
         self._queries = self._config['queries']
         self._html = None
+        self._headers = {'User-Agent':'Mozilla/5.0'}
 
         self._visit(url)
 
@@ -29,7 +30,7 @@ class HomePage:
 
 
     def _visit(self, url):
-        response = requests.get(url)
+        response = requests.get(url,headers= self._headers)
 
         response.raise_for_status()
 
