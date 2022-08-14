@@ -11,3 +11,9 @@ news_sites:
       homepage_article_links: '.c_t a'
       article_body: '.a_c'
       article_title: '.a_t'
+  elchiguirebipolar:
+    url: https://www.elchiguirebipolar.net
+    queries:
+      homepage_article_links: '.cbp-article__wrapper'
+      article_body: '.single__article__main__content'
+      article_title: '.single__article__header__title'

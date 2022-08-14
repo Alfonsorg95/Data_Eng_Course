@@ -57,7 +57,7 @@ def _fetch_article(news_site_uid, host, link):
 
     try:
         article = news.ArticlePage(news_site_uid, fixed_link)
-    except (HTTPError, MaxRetryError) as e:
+    except (HTTPError, MaxRetryError, ConnectionError):
         logger.warning('Error while fetching the article', exc_info=False)
 
     if article and not article.body:
