@@ -46,14 +46,15 @@ def _save_articles(news_site_uid, articles):
 
 
 def _fetch_article(news_site_uid, host, link):
-    logger.info('Start fetching article at {}'.format(link))
-
+    
     article = None
     fixed_link = _build_link(host, link)
 
+
     if not fixed_link.__contains__(news_site_uid):
-        print(fixed_link)
         return None
+
+    logger.info('Start fetching article at {}'.format(fixed_link))
 
     try:
         article = news.ArticlePage(news_site_uid, fixed_link)

@@ -45,6 +45,7 @@ class ArticlePage(NewsPage):
 
     def __init__(self, news_site_uid, url):
         super().__init__(news_site_uid, url)
+        self._url = url
 
     @property
     def body(self):
@@ -57,3 +58,7 @@ class ArticlePage(NewsPage):
         result = self._select(self._queries['article_title'])
 
         return result[0].text if result else ''
+    
+    @property
+    def url(self):
+        return self._url
