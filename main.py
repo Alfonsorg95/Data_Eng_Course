@@ -36,7 +36,7 @@ def _save_articles(news_site_uid, articles):
     out_file_name = '{news_site_uid}_{datetime}_articles.csv'.format(news_site_uid=news_site_uid, datetime = now)
     csv_headers = list(filter(lambda property: not property.startswith('_'), dir(articles[0])))
 
-    with open(out_file_name,mode='w+') as f:
+    with open('scrapped_news/' + out_file_name,mode='w+') as f:
         writer = csv.writer(f)
         writer.writerow(csv_headers)
 
@@ -51,9 +51,6 @@ def _fetch_article(news_site_uid, host, link):
     fixed_link = _build_link(host, link)
 
 
-    if not fixed_link.__contains__(news_site_uid):
-        return None
-
     logger.info('Start fetching article at {}'.format(fixed_link))
 
     try:
@@ -61,8 +58,8 @@ def _fetch_article(news_site_uid, host, link):
     except (HTTPError, MaxRetryError, ConnectionError):
         logger.warning('Error while fetching the article', exc_info=False)
 
-    if article and not article.body:
-        logger.warning('Invalid article. There is no body')
+    if article != None and not (article.body or article.title):
+        logger.warning('Invalid article. There is no body or title')
         return None
 
     return article
