@@ -3,9 +3,12 @@ import logging
 from urllib.parse import urlparse
 import pandas as pd
 import hashlib
+import nltk
+from nltk.corpus import stopwords
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+stop_words = set(stopwords.words('spanish'))
 
 def main(filename):
     logger.info('Starting cleaning process')
@@ -16,6 +19,8 @@ def main(filename):
     df = _extract_host(df)
     df = _strip_column(df, 'body')
     df = _generate_rows_uids(df)
+    df['title words'] = _tokenize_column(df, 'title')
+    df['body words'] = _tokenize_column(df, 'body')
 
     return df
 
@@ -62,6 +67,17 @@ def _generate_rows_uids(df):
     df['uid'] = uids
 
     return df.set_index('uid')
+
+
+def _tokenize_column(df, column_id):
+    return (df
+              .dropna()
+              .apply(lambda row: nltk.word_tokenize(row[column_id]), axis = 1)
+              .apply(lambda tokens: list(filter(lambda token: token.isalpha(), tokens)))
+              .apply(lambda tokens: list(map(lambda token: token.lower(), tokens)))
+              .apply(lambda word_list: list(filter(lambda word: word not in stop_words, word_list)))
+              .apply(lambda valid_words: len(valid_words))
+    )
 
 
 if __name__ == '__main__':
