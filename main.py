@@ -58,7 +58,7 @@ def _fetch_article(news_site_uid, host, link):
     except (HTTPError, MaxRetryError, ConnectionError):
         logger.warning('Error while fetching the article', exc_info=False)
 
-    if article != None and not (article.body or article.title):
+    if article != None and not (article.body and article.title):
         logger.warning('Invalid article. There is no body or title')
         return None
 
