@@ -1,9 +1,10 @@
 import logging
 import subprocess
+from extract.common import config
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-news_sites_uids = ['eluniversal', 'elpais', 'elchiguirebipolar']
+news_sites_uids = list(config('extract/')['news_sites'].keys())
 
 
 def main():

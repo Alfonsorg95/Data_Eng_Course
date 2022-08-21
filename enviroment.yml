@@ -1,0 +1,13 @@
+name: DataEngCourse
+channels:
+  - defaults
+dependencies:
+  - requests
+  - numpy
+  - yaml
+  - pandas
+  - beautifulsoup4
+  - matplotlib
+  - pyyaml
+  - nltk
+  - sqlalchemy
