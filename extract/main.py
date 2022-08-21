@@ -36,7 +36,7 @@ def _save_articles(news_site_uid, articles):
     out_file_name = '{news_site_uid}_{datetime}_articles.csv'.format(news_site_uid=news_site_uid, datetime = now)
     csv_headers = list(filter(lambda property: not property.startswith('_'), dir(articles[0])))
 
-    with open('scrapped_news/' + out_file_name,mode='w+') as f:
+    with open(out_file_name,mode='w+') as f:
         writer = csv.writer(f)
         writer.writerow(csv_headers)
 

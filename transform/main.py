@@ -10,10 +10,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 stop_words = set(stopwords.words('spanish'))
 
-def main(filename: str):
+def main(filename):
     logger.info('Starting cleaning process')
     
-    filename = filename.replace('\\', '/')
     df = _read_data(filename)
     df = _remove_duplicates(df , 'body')
     newspaper_uid = _extract_newspaper_uid(filename)
@@ -99,7 +98,7 @@ def _drop_rows_with_missing_values(df: pd.DataFrame):
 
 
 def _save_data(df: pd.DataFrame, filename: str):
-    clean_file_route = 'clean_news_data/clean_{}'.format(filename.split('/')[1])
+    clean_file_route = 'clean_{}'.format(filename)
     logger.info('Saving data at {}'.format(clean_file_route))
     df.to_csv(clean_file_route)
 
